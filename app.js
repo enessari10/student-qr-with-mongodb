@@ -26,10 +26,8 @@ db.on("error", function(err){
 
 db.once("open", function(){
     console.log("DB connection successfull!");
-    // all db communications
 });
 
-// catch 404 and redirect it to the error handler
 app.use(function(req, res, next) {
 
     var err = new Error("Not Found");
@@ -37,7 +35,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// Error handler
 app.use(function(err, req, res, next){
     
     res.status(err.status || 500);

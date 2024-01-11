@@ -4,9 +4,10 @@ require('dotenv').config({ path: '.env' });
 const express = require("express");
 var mongoose = require("mongoose");
 const Student = require("../models/student.model").Student;
-const QRCode = require('qrcode')
+const QRCode = require('qrcode');
 const router = express.Router();
 const Lecture = require("../models/lectures.model").Lectures;
+const Parent = require("../models/parent.model").Parent;
 
 
 router.get('/', async (req, res) => {
@@ -15,17 +16,44 @@ router.get('/', async (req, res) => {
 
 });
 
-router.post('/create', async (req, res) => {
+// router.post('/create', async (req, res) => {
 
-    try {
-      const { student_name, student_surname, student_email, student_password, student_phoneNumber } = req.body;
-      const newStudent = new Student({ student_name, student_surname, student_email, student_password, student_phoneNumber });
+//     try {
+//       const { student_name, student_surname, student_email, student_password, student_phoneNumber } = req.body;
+//       const newStudent = new Student({ student_name, student_surname, student_email, student_password, student_phoneNumber });
+//       await newStudent.save();
+//       res.status(200).json({ message: 'Öğrenci başarıyla oluşturuldu.', student: newStudent });
+//     } catch (error) {
+//       res.status(500).json({ message: 'Öğrenci oluşturulurken bir hata oluştu.', error: error.message });
+//     }
+
+// });
+
+router.post('/create', async (req, res) => {
+  try {
+      const { 
+          student_name, 
+          student_surname, 
+          student_email, 
+          student_password, 
+          student_phoneNumber,
+          parents 
+      } = req.body;
+
+      const newStudent = new Student({ 
+          student_name, 
+          student_surname, 
+          student_email, 
+          student_password, 
+          student_phoneNumber,
+          parents
+      });
+
       await newStudent.save();
       res.status(200).json({ message: 'Öğrenci başarıyla oluşturuldu.', student: newStudent });
-    } catch (error) {
+  } catch (error) {
       res.status(500).json({ message: 'Öğrenci oluşturulurken bir hata oluştu.', error: error.message });
-    }
-
+  }
 });
 
 router.post('/qr/:student_id', async (req, res) => {

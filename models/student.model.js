@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 const { stringify } = require("uuid");
 const bcrypt = require("bcrypt");
 var Schema = mongoose.Schema;
-const Parent = require("../models/parent.model").Parent;
+const ParentSchema = require("../models/parent.model").Parent.schema;
 
 var studentSchema = new Schema({
 
@@ -13,7 +13,7 @@ var studentSchema = new Schema({
     student_email: String,
     student_password: String,
     student_phoneNumber: String,
-    parents: [Parent.parentSchema]
+    parents: [ParentSchema]
 
 });
 

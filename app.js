@@ -21,6 +21,7 @@ app.use('/lectures', lecturesRoutes);
 app.get('/', async (req, res) => {
     res.status(200).json("Hello, welcome Student QR");
 });
+
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true});
 var db = mongoose.connection;
 

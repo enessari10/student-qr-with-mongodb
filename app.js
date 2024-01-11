@@ -6,6 +6,8 @@ const express = require("express");
 const logger = require("morgan");
 const jsonParser = require("body-parser").json;
 const studentRoutes = require("./routes/students");
+const lecturesRoutes = require("./routes/lectures");
+
 var mongoose = require("mongoose");
 
 const app = express();
@@ -14,6 +16,8 @@ app.use(jsonParser());
 
 
 app.use('/students', studentRoutes);
+app.use('/lectures', lecturesRoutes);
+
 app.get('/', async (req, res) => {
     res.status(200).json("Hello, welcome Student QR");
 });

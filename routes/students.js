@@ -6,12 +6,13 @@ var mongoose = require("mongoose");
 const Student = require("../models/student.model").Student;
 const QRCode = require('qrcode')
 const router = express.Router();
+const Lecture = require("../models/lectures.model").Lectures;
 
 
 router.get('/', async (req, res) => {
 
     res.status(200).json("Hello, welcome Students");
-    
+
 });
 
 router.post('/create', async (req, res) => {
@@ -27,17 +28,18 @@ router.post('/create', async (req, res) => {
 
 });
 
-router.post('/qr', async (req, res) => {
+router.post('/qr/:student_id', async (req, res) => {
 
     try {
-      const { student_email } = req.body;
-      const user = await Student.findOne({ student_email });
+      
+      const student_id = req.params.student_id;
+      const lecture = await Lecture.findOne({ student_id });
   
-      if (!user) {
-        return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
+      if (!lecture) {
+        return res.status(404).json({ message: 'Ders bulunamadı.' });
       }
 
-      let stringdata = JSON.stringify(user._id)
+      let stringdata = JSON.stringify(lecture._id)
       QRCode.toDataURL(stringdata, { type: 'image/png' }, function (err, url) {
         if (err) {
           return res.status(500).json({ message: 'QR kod oluşturulurken bir hata oluştu.', error: err.message });

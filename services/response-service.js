@@ -1,7 +1,6 @@
 'use strict';
 
-var config = require("../config");
-var statusCodes = require("../data_providers/status-codes");
+var statusCodes = require("../data-providers/status-codes");
 
 function successful(res, data, message, code = 200) {
 
